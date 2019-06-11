@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+
+#define TAM_QUADRO 8
+
 /**
  * Integrantes:
  * 
@@ -18,6 +21,7 @@ long int size = 0;
 int posicaoTotal = 0;
 char mem[1000];
 char quadro[8];
+char quadroParidadePar[9];
 
 void pegarDadosEnvio(){
 	int buffer;
@@ -38,10 +42,28 @@ void montarQuadro(){
 	printf("%s\n", quadro);
 }
 
+void bitParidade(){
+	int paridade = 0;
+	int bitParidadePar = 0;
+	int bitParidadeImpar = 0;
+	for(int i = 0; i < TAM_QUADRO; i++){
+		if(quadro[i] == '1'){
+			paridade += 1;
+		}
+	}
+	bitParidadePar = paridade % 2;
+	bitParidadeImpar = (bitParidadePar + 1) % 2;
+	printf("Bit paridade par: ");
+	printf("%d\n", bitParidadePar);
+	printf("Bit paridade impar: ");
+	printf("%d\n", bitParidadeImpar);
+}
+
 int main(int argc, char const *argv[]) {
 	pegarDadosEnvio();
 	while(size != 0){
 		montarQuadro();
+		bitParidade();
 		size -= 9;
 	}
     return 0;
