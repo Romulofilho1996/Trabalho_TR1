@@ -39,7 +39,6 @@ void montarQuadro(){
 }
 
 int main(int argc, char const *argv[]) {
-	int i = 0;
 	pegarDadosEnvio();
 	while(size != 0){
 		montarQuadro();
