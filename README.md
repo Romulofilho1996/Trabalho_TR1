@@ -1,10 +1,11 @@
 # Simulador Camada Física e de Enlace
 ## Como utilizar
-Tenha instalado em seu computador os comandos g++/gcc e make (para makefiles)
+Tenha instalado em seu computador os comandos g++/gcc e make (para makefiles).
+Na pasta src faça:
 
 ```
 make
-./main
+./simulador
 ```
 
 ## Integrantes
