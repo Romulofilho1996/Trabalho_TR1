@@ -5,6 +5,7 @@
 #include <iterator>
 #include "../include/enlace.hpp"
 #include "../include/fisica.hpp"
+#include "../include/wraper.hpp"
 
 #define TAM_QUADRO 8
 
@@ -15,7 +16,8 @@ char mem[1000];
 char quadro[8];
 char hamming[12];
 
-void pegarDadosEnvio(){
+void pegarDadosEnvio()
+{
 	FILE *file;
 	file = fopen("../assets/text.bin", "rb");
 	fread(mem, sizeof(mem), 1, file);
@@ -23,20 +25,26 @@ void pegarDadosEnvio(){
 	size = ftell(file);
 }
 
-void montarQuadro(){
+void montarQuadro()
+{
 	int j = 0;
-	for(int i = posicaoTotal; i < (posicaoTotal+8); i++){
+	for (int i = posicaoTotal; i < (posicaoTotal + 8); i++)
+	{
 		quadro[j] = mem[i];
 		j++;
 	}
-	j = 0; posicaoTotal += 9;
+	j = 0;
+	posicaoTotal += 9;
 	printf("Quadro: %s\n", quadro);
 }
 
-void bitParidade(){
+void bitParidade()
+{
 	bool paridadeBool = false;
-	for(int i = 0; i < TAM_QUADRO; i++){
-		if(quadro[i] == '1'){
+	for (int i = 0; i < TAM_QUADRO; i++)
+	{
+		if (quadro[i] == '1')
+		{
 			paridadeBool = !paridadeBool;
 		}
 	}
@@ -57,13 +65,19 @@ void bitParidade(){
 // 	printf("Hamming: %s\n", hamming);
 // }
 
-int main(int argc, char const *argv[]) {
-	pegarDadosEnvio();
-	while(size != 0){
-		montarQuadro();
-		bitParidade();
-		//codigoDeHamming();
-		size -= 9;
-	}
-    return 0;
+int main(int argc, char const *argv[])
+{
+	// pegarDadosEnvio();
+	// while (size != 0)
+	// {
+	// 	montarQuadro();
+	// 	bitParidade();
+	// 	//codigoDeHamming();
+	// 	size -= 9;
+	// }
+
+	wraper* w = new wraper();
+	w->AplicacaoTransmissora();
+
+	return 0;
 }
