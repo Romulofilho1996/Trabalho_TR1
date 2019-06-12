@@ -3,20 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
+#include "../include/enlace.hpp"
+#include "../include/fisica.hpp"
 
 #define TAM_QUADRO 8
 
-/**
- * Integrantes:
- * 
- * Christian Luis - 15/0153538
- * Thiago Araújo da Silva - 15/0149832
- * Rômulo de Vasconcelos Feijão Filho - 14/00312602
- * Matheus Feitosa de Castro - 15/01412974
- * Guilherme Andreúce- 14/01419615
- * Gabriel Guerra - 15/0126247
- * 
-**/
 using namespace std;
 long int size = 0;
 int posicaoTotal = 0;

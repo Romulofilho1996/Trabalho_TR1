@@ -5,10 +5,10 @@ CFLAGS=-I$(IDIR) -Wall
 ODIR=obj
 LIBS=-lm
 
-_DEPS =
+_DEPS = fisica.hpp enlace.hpp
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = simulador.o
+_OBJ = simulador.o fisica.o enlace.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cpp $(DEPS)
