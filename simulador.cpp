@@ -25,7 +25,6 @@ char quadro[8];
 char hamming[12];
 
 void pegarDadosEnvio(){
-	int buffer;
 	FILE *file;
 	file = fopen("text.bin", "rb");
 	fread(mem, sizeof(mem), 1, file);
@@ -76,7 +75,7 @@ int main(int argc, char const *argv[]) {
 	while(size != 0){
 		montarQuadro();
 		bitParidade();
-		codigoDeHamming();
+		//codigoDeHamming();
 		size -= 9;
 	}
     return 0;
