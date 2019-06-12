@@ -43,18 +43,14 @@ void montarQuadro(){
 }
 
 void bitParidade(){
-	int paridade = 0;
-	int bitParidadePar = 0;
-	int bitParidadeImpar = 0;
+	bool paridadeBool = false;
 	for(int i = 0; i < TAM_QUADRO; i++){
 		if(quadro[i] == '1'){
-			paridade += 1;
+			paridadeBool = !paridadeBool;
 		}
 	}
-	bitParidadePar = paridade % 2;
-	bitParidadeImpar = (bitParidadePar + 1) % 2;
-	printf("Bit paridade par: %d\n", bitParidadePar);
-	printf("Bit paridade impar: %d\n", bitParidadeImpar);
+	printf("Bit paridade par: %d\n", paridadeBool);
+	printf("Bit paridade impar: %d\n", !paridadeBool);
 }
 
 // void codigoDeHamming(){
