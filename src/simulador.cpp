@@ -26,7 +26,7 @@ char hamming[12];
 
 void pegarDadosEnvio(){
 	FILE *file;
-	file = fopen("text.bin", "rb");
+	file = fopen("../assets/text.bin", "rb");
 	fread(mem, sizeof(mem), 1, file);
 	fseek(file, 0L, SEEK_END);
 	size = ftell(file);
