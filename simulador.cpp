@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <iterator>
 
 #define TAM_QUADRO 8
 
@@ -21,7 +22,7 @@ long int size = 0;
 int posicaoTotal = 0;
 char mem[1000];
 char quadro[8];
-char quadroParidadePar[9];
+char hamming[12];
 
 void pegarDadosEnvio(){
 	int buffer;
@@ -39,7 +40,7 @@ void montarQuadro(){
 		j++;
 	}
 	j = 0; posicaoTotal += 9;
-	printf("%s\n", quadro);
+	printf("Quadro: %s\n", quadro);
 }
 
 void bitParidade(){
@@ -53,17 +54,29 @@ void bitParidade(){
 	}
 	bitParidadePar = paridade % 2;
 	bitParidadeImpar = (bitParidadePar + 1) % 2;
-	printf("Bit paridade par: ");
-	printf("%d\n", bitParidadePar);
-	printf("Bit paridade impar: ");
-	printf("%d\n", bitParidadeImpar);
+	printf("Bit paridade par: %d\n", bitParidadePar);
+	printf("Bit paridade impar: %d\n", bitParidadeImpar);
 }
+
+// void codigoDeHamming(){
+// 	int j = 0;
+// 	int potencias[] = {1,2,4,8};
+// 	for(int i = 1; i <= 12; i++){
+// 		bool exists = find(begin(potencias), end(potencias), i) != end(potencias);
+// 		if(!exists){
+// 			hamming[i] = quadro[j];
+// 			j++;
+// 		}
+// 	}
+// 	printf("Hamming: %s\n", hamming);
+// }
 
 int main(int argc, char const *argv[]) {
 	pegarDadosEnvio();
 	while(size != 0){
 		montarQuadro();
 		bitParidade();
+		codigoDeHamming();
 		size -= 9;
 	}
     return 0;
