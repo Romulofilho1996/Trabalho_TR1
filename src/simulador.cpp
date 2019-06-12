@@ -52,18 +52,68 @@ void bitParidade()
 	printf("Bit paridade impar: %d\n", !paridadeBool);
 }
 
-// void codigoDeHamming(){
-// 	int j = 0;
-// 	int potencias[] = {1,2,4,8};
-// 	for(int i = 1; i <= 12; i++){
-// 		bool exists = find(begin(potencias), end(potencias), i) != end(potencias);
-// 		if(!exists){
-// 			hamming[i] = quadro[j];
-// 			j++;
-// 		}
-// 	}
-// 	printf("Hamming: %s\n", hamming);
-// }
+
+
+void codigoDeHamming(){
+	int data[12];
+	int datareceived[12],c1,c2,c4,c8,c,i=1,n=0;
+	//cout << "lendo quadro\n";
+	cout << "Hamming (12,8): ";
+	data[2] = quadro[0];
+	data[4] = quadro[1];
+	data[5] = quadro[2];
+	data[6] = quadro[3];
+	data[8] = quadro[4];
+	data[9] = quadro[5];
+	data[10] = quadro[6];
+	data[11] = quadro[7];
+	//cout << "calculando bits especiais \n";
+	data[0] = data[2] ^ data[4] ^ data[6] ^ data[8] ^ data[10];
+	data[1] = data[2] ^ data[5] ^ data[6] ^ data[9] ^ data[10];
+	data[3] = data[4] ^ data[5] ^ data[6] ^ data[11];
+	data[7] = data[8] ^ data[9] ^ data[10] ^ data[11];
+	//cout << "parte do receiver \n";
+	for (int i = 0; i < 12; ++i)
+	{
+		datareceived[i] = data[i];
+	}
+	//e se receiver receber bit flipado?
+	//datareceived[5] = 0;
+	
+	c1 = datareceived[0] ^ datareceived[2] ^ datareceived[4] ^ datareceived[6] ^ datareceived[8] ^ datareceived[10];
+	c2 = datareceived[1] ^ datareceived[2] ^ datareceived[5] ^ datareceived[6] ^ datareceived[9] ^ datareceived[10];
+    c4 = datareceived[3] ^ datareceived[4] ^ datareceived[5] ^ datareceived[6] ^ datareceived[11];
+    c8 = datareceived[7] ^ datareceived[8] ^ datareceived[9] ^ datareceived[10] ^ datareceived[11];
+    c = ((c8*8) + (c4*4) + (c2*2) + c1); 
+
+    if (c == 0)
+    {
+    	cout<<"\nSem erro durante a transimissao\n";
+    }
+    else {
+    cout<<"\nError na posicao "<<c;
+    cout<<"\nDado enviado: ";
+    for(i=0;i<12;i++)
+          cout<<data[i];
+        
+    cout<<"\nDado recebido: ";
+        for(i=0;i<12;i++)
+          cout<<datareceived[i];
+        
+    cout<<"\nDado correto é: \n";
+        
+    if(datareceived[12-c]==0)
+      datareceived[12-c]=1;
+        else
+      datareceived[12-c]=0;
+    for (i=0;i<12;i++) {
+      cout<<datareceived[i];
+    }
+  }
+		
+}
+
+
 
 int main(int argc, char const *argv[])
 {
