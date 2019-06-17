@@ -22,9 +22,32 @@ int *fisica::getQuadro()
     return this->quadro;
 }
 
+int fisica::getTamanho()
+{
+    return this->quadro_tamanho;
+}
+
+void fisica::MeioDeComunicacao()
+{
+    cout << "\n=========REALIZANDO TRANSMISSAO PONTO A PARA PONTO B=========" << endl;
+    int *fluxoBrutoDeBitsPontoA;
+    int *fluxoBrutoDeBitsPontoB;
+    fluxoBrutoDeBitsPontoA = this->quadro;
+    fluxoBrutoDeBitsPontoB = (int *)malloc(sizeof(int) * this->quadro_tamanho);
+    for (int i = 0; i < this->quadro_tamanho; i++)
+    {
+        fluxoBrutoDeBitsPontoB[i] = fluxoBrutoDeBitsPontoA[i];
+    }
+    free(fluxoBrutoDeBitsPontoA);
+    fluxoBrutoDeBitsPontoA = nullptr;
+    this->quadro = fluxoBrutoDeBitsPontoB;
+    CamadaFisicaReceptora();
+}
+
 void fisica::CamadaFisicaTransmissora()
 {
-    int tipoDeCodificacao = 0; //alterar de acordo o teste
+    cout << "\n=========ENTRANDO CAMADA FISICA TRANSMISSORA=========" << endl;
+    int tipoDeCodificacao = 1; //alterar de acordo o teste
                                //ATENÇÃO: trabalhar com BITS!!!
     switch (tipoDeCodificacao)
     {
@@ -41,12 +64,13 @@ void fisica::CamadaFisicaTransmissora()
     //int *fluxoBrutoDeBits = getQuadro();
 
     //ADICIONAR MEIO DE COMUNICAÇÃO
-    //MeioDeComunicacao(fluxoBrutoDeBits);
+    MeioDeComunicacao();
 }
 
 void fisica::CamadaFisicaReceptora()
 {
-    int tipoDeDecodificacao = 0; //alterar de acordo o teste
+    cout << "\n=========ENTRANDO CAMADA FISICA RECEPTORA=========" << endl;
+    int tipoDeDecodificacao = 1; //alterar de acordo o teste
                                  //ATENÇÃO: trabalhar com BITS!!!
     switch (tipoDeDecodificacao)
     {
@@ -105,13 +129,16 @@ void fisica::CamadaFisicaReceptoraDecodificacaoManchester()
     cout << "\n=========Recepção de Manchester=========" << endl;
     for (int i = 0, j = 0; i < this->quadro_tamanho; i += 2, j++)
     {
-        if((this->quadro[i] == 0) && (this->quadro[i + 1] == 1)) {
+        if ((this->quadro[i] == 0) && (this->quadro[i + 1] == 1))
+        {
             quadro_decodificado[j] = 0;
         }
-        else if((this->quadro[i] == 1) && (this->quadro[i + 1] == 0)) {
+        else if ((this->quadro[i] == 1) && (this->quadro[i + 1] == 0))
+        {
             quadro_decodificado[j] = 1;
         }
-        else {
+        else
+        {
             cout << "Erro na mensagem: " << i << " " << i + 1 << endl;
             break;
         }

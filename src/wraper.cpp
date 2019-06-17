@@ -11,6 +11,8 @@ void wraper::AplicacaoTransmissora()
 
 void wraper::CamadaDeAplicacaoTransmissora()
 {
+    cout << "\n=========ENTRANDO CAMADA APLICACAO TRANSMISSORA=========" << endl;
+    cout << "\n=========REALIZANDO CONVERSAO PARA BINARIO=========" << endl;
     string binario;
     for (size_t i = 0; i < this->mensagem.size(); i++)
     {
@@ -21,29 +23,42 @@ void wraper::CamadaDeAplicacaoTransmissora()
     for (size_t i = 0; i < binario.size(); i++)
     {
         binario_array[i] = (int)binario.at(i) - 48;
+        cout << binario_array[i];
     }
+    cout << endl;
     this->quadro = binario_array;
     this->quadro_tamanho = binario.size();
     binario_array = nullptr;
-    MeioDeComunicacao();
-}
+    this->camada_fisica = new fisica(this->quadro, this->quadro_tamanho);
+    this->camada_fisica->CamadaFisicaTransmissora();
 
-void wraper::MeioDeComunicacao()
-{
-    cout << "\n=========Binario Inicial=========" << endl;
-    for (int i = 0; i < this->quadro_tamanho; i++)
-    {
-        cout << this->quadro[i];
-    }
-    cout << endl;
+    //AJUSTAR SIMULAÇÂO
+    CamadaDeAplicacaoReceptora();
 }
 
 void wraper::AplicacaoReceptora()
 {
+    cout << "A mensagem recebida foi: " << this->mensagem << endl;
 }
 
 void wraper::CamadaDeAplicacaoReceptora()
 {
+    cout << "\n=========ENTRANDO CAMADA APLICACAO RECEPTORA=========" << endl;
+    string bit_string = "";
+    string mensagem_final = "";
+    for (int i = 0; i < this->quadro_tamanho; i++)
+    {
+        bit_string += (char)(this->quadro[i] + 48);
+    }
+    stringstream sstream(bit_string);
+    while(sstream.good()) {
+        bitset<8> bits;
+        sstream >> bits;
+        char caractere = char(bits.to_ulong());
+        mensagem_final += caractere;
+    }
+    this->mensagem = mensagem_final;
+    AplicacaoReceptora();
 }
 
 wraper::wraper()
@@ -52,4 +67,6 @@ wraper::wraper()
 
 wraper::~wraper()
 {
+    delete this->camada_fisica;
+    delete this->camada_enlace;
 }

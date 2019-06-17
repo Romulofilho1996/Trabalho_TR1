@@ -3,14 +3,12 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
-#include "../include/enlace.hpp"
-#include "../include/fisica.hpp"
 #include "../include/wraper.hpp"
 
 #define TAM_QUADRO 8
 
 using namespace std;
-long int size = 0;
+long int size_ = 0;
 int posicaoTotal = 0;
 char mem[1000];
 char quadro[8];
@@ -22,7 +20,7 @@ void pegarDadosEnvio()
 	file = fopen("../assets/text.bin", "rb");
 	fread(mem, sizeof(mem), 1, file);
 	fseek(file, 0L, SEEK_END);
-	size = ftell(file);
+	size_ = ftell(file);
 }
 
 void montarQuadro()
@@ -113,25 +111,11 @@ void codigoDeHamming(){
 		
 }
 
-
-
 int main(int argc, char const *argv[])
 {
-	// pegarDadosEnvio();
-	// while (size != 0)
-	// {
-	// 	montarQuadro();
-	// 	bitParidade();
-	// 	//codigoDeHamming();
-	// 	size -= 9;
-	// }
-
 	wraper* w = new wraper();
 	w->AplicacaoTransmissora();
-
-	fisica *camada_fisica = new fisica(w->quadro, w->quadro_tamanho);
-	camada_fisica->CamadaFisicaTransmissoraCodificacaoManchester();
-	camada_fisica->CamadaFisicaReceptoraDecodificacaoManchester();
+	delete w;
 
 	return 0;
 }
