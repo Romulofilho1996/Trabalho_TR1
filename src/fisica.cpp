@@ -67,6 +67,18 @@ void fisica::CamadaFisicaReceptora()
 
 void fisica::CamadaFisicaTransmissoraCodificacaoBinaria()
 {
+     int *quadro_codificado;
+
+    quadro_codificado = (int *)malloc(sizeof(int));
+    cout << "\n=========Transmissão Codificada Binaria=========" << endl;
+    for (int i = 0; i < this->quadro_tamanho; i++)
+    {
+        quadro_codificado[i] = this->quadro[i];
+        cout << quadro_codificado[i];
+    }
+    cout << endl;
+    free(this->quadro);
+    this->quadro = quadro_codificado;
 }
 
 void fisica::CamadaFisicaTransmissoraCodificacaoManchester()
@@ -95,6 +107,25 @@ void fisica::CamadaFisicaTransmissoraCodificacaoManchesterDiferencial()
 
 void fisica::CamadaFisicaReceptoraDecodificacaoBinaria()
 {
+    int *quadro_decodificado = (int *)malloc(sizeof(int));
+    cout << "\n=========Recepção de Binaria=========" << endl;
+    for (int i = 0; i < this->quadro_tamanho; i++)
+    {
+        if(this->quadro[i] == 0) {
+            quadro_decodificado[i] = 0;
+        }
+        else if(this->quadro[i] == 1) {
+            quadro_decodificado[i] = 1;
+        }
+        else {
+            cout << "Erro na mensagem: " << i << endl;
+            break;
+        }
+        cout << quadro_decodificado[i];
+	}
+	cout << endl;
+    free(this->quadro);
+    this->quadro = quadro_decodificado;
 }
 
 void fisica::CamadaFisicaReceptoraDecodificacaoManchester()
