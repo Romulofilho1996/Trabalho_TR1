@@ -25,7 +25,12 @@ public:
     void CamadaFisicaReceptoraDecodificacaoBinaria();
     void CamadaFisicaReceptoraDecodificacaoManchester();
     void CamadaFisicaReceptoraDecodificacaoManchesterDiferencial();
+
+    //MEIO COMUNICAÇAO
+    void MeioDeComunicacao();
+
     int* getQuadro();
+    int getTamanho();
 
     fisica(int* quadro, int quadro_tamanho);
     ~fisica();

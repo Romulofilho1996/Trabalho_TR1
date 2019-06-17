@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
-#include <fstream>
-#include <iterator>
 #include <bitset>
+#include <string>
+#include <sstream>
+#include "./enlace.hpp"
+#include "./fisica.hpp"
 
 using namespace std;
 
@@ -11,12 +11,14 @@ class wraper
 {
 private:
     string mensagem;
+    fisica *camada_fisica;
+    enlace* camada_enlace;
+
 public:
     int* quadro;
     int quadro_tamanho;
     void AplicacaoTransmissora();
     void CamadaDeAplicacaoTransmissora();
-    void MeioDeComunicacao();
     void AplicacaoReceptora();
     void CamadaDeAplicacaoReceptora();
 
