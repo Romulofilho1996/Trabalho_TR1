@@ -11,9 +11,9 @@ class wraper
 {
 private:
     string mensagem;
+public:
     int* quadro;
     int quadro_tamanho;
-public:
     void AplicacaoTransmissora();
     void CamadaDeAplicacaoTransmissora();
     void MeioDeComunicacao();
