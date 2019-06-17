@@ -30,7 +30,7 @@ void wraper::CamadaDeAplicacaoTransmissora()
 
 void wraper::MeioDeComunicacao()
 {
-    cout << "Binario: ";
+    cout << "\n=========Binario Inicial=========" << endl;
     for (int i = 0; i < this->quadro_tamanho; i++)
     {
         cout << this->quadro[i];
