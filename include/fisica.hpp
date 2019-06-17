@@ -10,8 +10,8 @@ class fisica
 {
 private:
     int* quadro;
-    void setQuadro(int*);
-
+    int quadro_tamanho;
+    void setQuadro(int*, int);
 public:
     //All methods should modify the private atribute <quadro>
     //TRANSMISSÃO
@@ -27,7 +27,7 @@ public:
     void CamadaFisicaReceptoraDecodificacaoManchesterDiferencial();
     int* getQuadro();
 
-    fisica(int* quadro);
+    fisica(int* quadro, int quadro_tamanho);
     ~fisica();
 };
 

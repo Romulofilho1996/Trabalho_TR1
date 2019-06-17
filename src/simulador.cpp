@@ -129,5 +129,9 @@ int main(int argc, char const *argv[])
 	wraper* w = new wraper();
 	w->AplicacaoTransmissora();
 
+	fisica *camada_fisica = new fisica(w->quadro, w->quadro_tamanho);
+	camada_fisica->CamadaFisicaTransmissoraCodificacaoManchester();
+	camada_fisica->CamadaFisicaReceptoraDecodificacaoManchester();
+
 	return 0;
 }
