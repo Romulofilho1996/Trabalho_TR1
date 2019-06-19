@@ -37,7 +37,14 @@ public:
 
     /**
      * @brief Realiza a codificação Manchester Diferencial para a
-     * transmissão ##FAVOR COMPLETAR COM O RESTO##
+     * transmissão
+     * Para simular o clock, juntamente com a codificação é utilizado
+     * um bit de referência e então, é feita a operação de XOR neste
+     * bit com o valor 0 e 1, e o resultado dessas operações formam a
+     * mensagem codificada. Caso o bit de mensagem seja 1, o valor do
+     * bit de refência é invertido (de 0 para 1 ou de 1 para 0) e 
+     * então é feita a mesma operação de XOR e o resultado é adicionado
+     * à mensagem 
      * 
      */
     void CamadaFisicaTransmissoraCodificacaoManchesterDiferencial();
@@ -67,7 +74,11 @@ public:
 
     /**
      * @brief Realiza a decodificação Manchester Diferencial 
-     * verificando se ##FAVOR COMPLETAR COM O RESTO##
+     * verificando se alguma sequencia de bits tomados dois a dois
+     * é diferente de '01' ou '10' e, caso seja, devolve uma 
+     * mensagem de erro e descarta a mensagem. Caso seja '10', o
+     * bit de referencia é invertido e a decodificação também. 
+     * Caso seja '01' apenas prossegue com a decodificação
      * 
      */
     void CamadaFisicaReceptoraDecodificacaoManchesterDiferencial();
