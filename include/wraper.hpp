@@ -12,10 +12,10 @@ class wraper
 private:
     string mensagem;
     fisica *camada_fisica;
-    enlace* camada_enlace;
+    enlace *camada_enlace;
 
 public:
-    int* quadro;
+    int *quadro;
     int quadro_tamanho;
     void AplicacaoTransmissora();
     void CamadaDeAplicacaoTransmissora();
