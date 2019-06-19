@@ -68,5 +68,5 @@ wraper::wraper()
 wraper::~wraper()
 {
     delete this->camada_fisica;
-    delete this->camada_enlace;
+    free(this->quadro);
 }

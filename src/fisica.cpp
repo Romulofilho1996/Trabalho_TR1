@@ -47,7 +47,7 @@ void fisica::MeioDeComunicacao()
 void fisica::CamadaFisicaTransmissora()
 {
     cout << "\n=========ENTRANDO CAMADA FISICA TRANSMISSORA=========" << endl;
-    int tipoDeCodificacao = 2; //alterar de acordo o teste
+    int tipoDeCodificacao = 0; //alterar de acordo o teste
                                //ATENÇÃO: trabalhar com BITS!!!
     switch (tipoDeCodificacao)
     {
@@ -70,7 +70,7 @@ void fisica::CamadaFisicaTransmissora()
 void fisica::CamadaFisicaReceptora()
 {
     cout << "\n=========ENTRANDO CAMADA FISICA RECEPTORA=========" << endl;
-    int tipoDeDecodificacao = 2; //alterar de acordo o teste
+    int tipoDeDecodificacao = 0; //alterar de acordo o teste
                                  //ATENÇÃO: trabalhar com BITS!!!
     switch (tipoDeDecodificacao)
     {
@@ -101,7 +101,6 @@ void fisica::CamadaFisicaTransmissoraCodificacaoBinaria()
         cout << quadro_codificado[i];
     }
     cout << endl;
-    free(this->quadro);
     this->quadro = quadro_codificado;
 }
 
@@ -120,7 +119,6 @@ void fisica::CamadaFisicaTransmissoraCodificacaoManchester()
         cout << quadro_codificado[j + 1];
     }
     cout << endl;
-    free(this->quadro);
     this->quadro = quadro_codificado;
     this->quadro_tamanho = novo_tamanho;
 }
@@ -149,7 +147,6 @@ void fisica::CamadaFisicaTransmissoraCodificacaoManchesterDiferencial()
 	
     }
     cout << endl;
-    free(this->quadro);
     this->quadro = quadro_codificado;
     this->quadro_tamanho = novo_tamanho;
 }
