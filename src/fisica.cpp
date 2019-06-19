@@ -47,7 +47,7 @@ void fisica::MeioDeComunicacao()
 void fisica::CamadaFisicaTransmissora()
 {
     cout << "\n=========ENTRANDO CAMADA FISICA TRANSMISSORA=========" << endl;
-    int tipoDeCodificacao = 1; //alterar de acordo o teste
+    int tipoDeCodificacao = 2; //alterar de acordo o teste
                                //ATENÇÃO: trabalhar com BITS!!!
     switch (tipoDeCodificacao)
     {
@@ -70,7 +70,7 @@ void fisica::CamadaFisicaTransmissora()
 void fisica::CamadaFisicaReceptora()
 {
     cout << "\n=========ENTRANDO CAMADA FISICA RECEPTORA=========" << endl;
-    int tipoDeDecodificacao = 1; //alterar de acordo o teste
+    int tipoDeDecodificacao = 2; //alterar de acordo o teste
                                  //ATENÇÃO: trabalhar com BITS!!!
     switch (tipoDeDecodificacao)
     {
@@ -127,6 +127,31 @@ void fisica::CamadaFisicaTransmissoraCodificacaoManchester()
 
 void fisica::CamadaFisicaTransmissoraCodificacaoManchesterDiferencial()
 {
+    int *quadro_codificado;
+    int novo_tamanho = this->quadro_tamanho * 2;
+    int bitreferencia = 0;
+
+
+    quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
+    cout << "\n======Transmissão Codificada Manchester Diferencial======" << endl;
+    for (int i = 0, j = 0; i < this->quadro_tamanho; i++, j += 2)
+    {
+        if (this->quadro[i] == 1)
+        {
+            bitreferencia=bitreferencia^1;
+        }
+
+        quadro_codificado[j] = bitreferencia;
+        quadro_codificado[j+1] = bitreferencia^1;
+
+        cout << quadro_codificado[j];
+        cout << quadro_codificado[j + 1];
+	
+    }
+    cout << endl;
+    free(this->quadro);
+    this->quadro = quadro_codificado;
+    this->quadro_tamanho = novo_tamanho;
 }
 
 void fisica::CamadaFisicaReceptoraDecodificacaoBinaria()
@@ -184,4 +209,35 @@ void fisica::CamadaFisicaReceptoraDecodificacaoManchester()
 
 void fisica::CamadaFisicaReceptoraDecodificacaoManchesterDiferencial()
 {
+    int novo_tamanho = this->quadro_tamanho / 2;
+    int *quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);
+    int bitreferencia=0;
+
+
+    cout << "\n======Recepção de Manchester Diferencial======" << endl;
+
+    for (int i = 0, j = 0; i < this->quadro_tamanho; i += 2, j++)
+    {
+
+	if ((this->quadro[i] == (0^bitreferencia)) && (this->quadro[i + 1] == (1^bitreferencia)))
+	{
+		quadro_decodificado[j] = 0;
+	}
+	else if ((this->quadro[i] == (1^bitreferencia)) && (this->quadro[i + 1] == (0^bitreferencia)))
+	{
+		quadro_decodificado[j] = 1;
+		bitreferencia = bitreferencia^1;
+	}else
+	{
+		cout << "Erro na mensagem: " << i << " " << i + 1 << endl;
+        	break;
+	}
+
+        cout << quadro_decodificado[j];
+    }
+
+    cout << endl;
+    free(this->quadro);
+    this->quadro = quadro_decodificado;
+    this->quadro_tamanho = novo_tamanho;
 }
