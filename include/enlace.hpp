@@ -13,7 +13,6 @@ private:
     void setQuadro(int*);
 
 public:
-    //All methods should modify the private atribute <quadro>
     //TRANSMISSÃO
     void CamadaEnlaceDadosTransmissora();
     void CamadaEnlaceDadosTransmissoraEnquadramento();

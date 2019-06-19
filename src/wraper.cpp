@@ -32,7 +32,9 @@ void wraper::CamadaDeAplicacaoTransmissora()
     this->camada_fisica = new fisica(this->quadro, this->quadro_tamanho);
     this->camada_fisica->CamadaFisicaTransmissora();
 
-    //AJUSTAR SIMULAÇÂO
+
+    //Recuperar quadro da camada fisica
+    this->quadro = this->camada_fisica->quadro;
     CamadaDeAplicacaoReceptora();
 }
 
@@ -68,5 +70,4 @@ wraper::wraper()
 wraper::~wraper()
 {
     delete this->camada_fisica;
-    free(this->quadro);
 }

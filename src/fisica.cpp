@@ -2,7 +2,7 @@
 
 fisica::fisica(int *quadro_inicial, int quadro_tamanho)
 {
-    this->quadro = quadro;
+    this->quadro = quadro_inicial;
     this->quadro_tamanho = quadro_tamanho;
 }
 
@@ -78,7 +78,6 @@ void fisica::CamadaFisicaTransmissoraCodificacaoBinaria()
         cout << quadro_codificado[i];
     }
     cout << endl;
-
     free(this->quadro);
     this->quadro = quadro_codificado;
 }

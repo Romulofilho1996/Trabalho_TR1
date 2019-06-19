@@ -8,13 +8,12 @@ using namespace std;
 
 class fisica
 {
-private:
+public:
     //Atributo que guarda referencia do quadro a ser utilizado em cada passo.
     int* quadro;
     //Atributo que guarda tamanho do quadro, para que seja possivel iterar sobre este
     int quadro_tamanho;
-    //Metodo set do atributo quadro.
-public:
+
     /**
      * @brief Chama métodos responsáveis pela codificação da mensagem
      * de acordo com o valor definido dentro do próprio método
