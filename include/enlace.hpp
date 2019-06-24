@@ -10,6 +10,7 @@ class enlace
 {
 private:
     int* quadro;
+    int quadro_tamanho;
     void setQuadro(int*);
 
 public:
@@ -35,6 +36,6 @@ public:
 
     int* getQuadro();
 
-    enlace(int* quadro);
+    enlace(int* quadro, int quadro_tamanho);
     ~enlace();
 };
