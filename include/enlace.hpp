@@ -9,11 +9,12 @@ using namespace std;
 class enlace
 {
 private:
-    int* quadro;
-    int quadro_tamanho;
+    
     void setQuadro(int*);
 
 public:
+    int* quadro;
+    int quadro_tamanho;
     //TRANSMISSÃO
     void CamadaEnlaceDadosTransmissora();
     void CamadaEnlaceDadosTransmissoraEnquadramento();

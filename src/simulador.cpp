@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iterator>
 #include "../include/wraper.hpp"
+
 /**
  * Integrantes:
  * 
@@ -21,7 +22,12 @@ int main(int argc, char const *argv[])
 {
 	wraper* w = new wraper();
 	w->AplicacaoTransmissora();
-	delete w;
 
+
+	enlace* e = new enlace(w->quadro, w->quadro_tamanho);
+	e->CamadaEnlaceDadosTransmissoraControleDeErroCRC();
+	
+	// delete w;
+	// delete e;
 	return 0;
 }
