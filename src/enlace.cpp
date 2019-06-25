@@ -121,25 +121,22 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
     // 0x04C11DB7
     // x26 + x23 + x22 + x16 + x12 + x11 + x10 + x8 + x7 + x5 + x4 + x2 + x + 1
     // 0000 0100 1100 0001 0001 1101 1011 0111
-    cout << "quadro: ";
+    cout << "\n=========Transmissão Codificada CRC-32=========" << endl;
+    cout << "Quadro: ";
     for(int i = 0; i < this->quadro_tamanho; i++) {
         cout << this->quadro[i];
     }
-    int *polinomio = (int *)malloc(sizeof(int) * 32);
-    cout << endl << "polinomio: ";
-    for (int i = 0; i < 32; i++)
+    // int *polinomio = (int *)malloc(sizeof(int) * (32-5));
+    // Removi os 0's da frente pra facilitar na divisao
+    int polinomio[] = {1,0,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,0,1,1,0,1,1,0,1,1,1};
+    cout << endl << "Polinomio: ";
+    for (int i = 0; i < 27; i++)
     {
-        if (i == 31 || i == 30 || i == 29 || i == 27 || i == 26 || i == 24 || i == 23 
-        || i == 21 || i == 20 || i == 19 || i == 15 || i == 9 || i == 8 || i == 5)
-            polinomio[i] = 1;
-        else
-            polinomio[i] = 0;
-
         cout << polinomio[i];
     }
-    cout << endl << "quadro crc: ";
 
-    int novo_tamanho = this->quadro_tamanho + 32;
+    // Padding de tamanho (grau do polinomio-1) 
+    int novo_tamanho = this->quadro_tamanho + 31;
     int *quadro_crc = (int *)malloc(sizeof(int) * novo_tamanho);
     for( int i = 0; i < novo_tamanho; i ++) {
         if (i < this->quadro_tamanho)
@@ -147,12 +144,31 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
         else
             quadro_crc[i] = 0;
 
+        // cout << quadro_crc[i];
+    }
+    cout << endl;
+
+    for (int i = 0; i < this->quadro_tamanho; i++)
+    {
+        if(quadro_crc[i] == 1){
+            //Faz o XOR com todos os elementos do polinomio 
+            for (int j = 0; j < 27; j++){
+                quadro_crc[j+i] ^= polinomio[j];
+            }
+        }
+    }
+
+    for (int i = 0; i < this->quadro_tamanho; i++){
+        quadro_crc[i] = this->quadro[i];
+    }
+    cout << "Quadro CRC-32: ";
+    for (int i = 0; i < novo_tamanho; i++){
         cout << quadro_crc[i];
     }
     cout << endl;
 
-
-    int *div_resultado = (int *)malloc(sizeof(int) * 32);
+    this->quadro_tamanho = novo_tamanho;
+    this->quadro = quadro_crc;
 }
 
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
