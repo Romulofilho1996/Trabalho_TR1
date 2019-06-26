@@ -43,7 +43,7 @@ void enlace::CamadaEnlaceDadosTransmissoraEnquadramento()
 
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
 {
-    int tipoDeControleDeErro = 0; //alterar de acordo com o teste
+    int tipoDeControleDeErro = 3; //alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
     case 0: //bit de paridade par
@@ -55,6 +55,7 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
     case 2: //CRC
     //codigo
     case 3: //codigo de Hamming
+        CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming();
         //codigo
         break;
     } //fim do switch/case
@@ -178,7 +179,39 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
 
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
 {
-}
+    int potencias[4] = {0,1,3,7};
+    int j = 0;
+    int *quadro_codificado;
+    int novo_tamanho = this->quadro_tamanho + (4 * this->quadro_tamanho / 8);
+    quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
+    cout << "\n=========Transmissão Codificada Hamming=========" << endl;
+    for(int k = 0; k < this->quadro_tamanho / 8; k++){
+        for(int i = k * 12; i < (k * 12) + 12; i++){
+            if(find(begin(potencias), end(potencias), i % 12) == end(potencias)){
+                quadro_codificado[i] = this->quadro[j];
+                j++;
+            }else{
+                quadro_codificado[i] = 0;
+            }
+        }
+    }
+    for(int k = 0; k < novo_tamanho / 12; k++){
+        for(int i = k * 12; i < (k * 12) + 12; i++){
+            switch(i % 12){
+                case 0: quadro_codificado[i] = quadro_codificado[i + 2] ^ quadro_codificado[i + 4] ^ quadro_codificado[i + 6] ^ quadro_codificado[i + 8] ^ quadro_codificado[i + 10]; break;
+                case 1: quadro_codificado[i] = quadro_codificado[i + 2] ^ quadro_codificado[i + 5] ^ quadro_codificado[i + 6] ^ quadro_codificado[i + 9] ^ quadro_codificado[i + 10]; break;
+                case 3: quadro_codificado[i] = quadro_codificado[i + 4] ^ quadro_codificado[i + 5] ^ quadro_codificado[i + 6]; break;
+                case 7: quadro_codificado[i] = quadro_codificado[i + 8] ^ quadro_codificado[i + 9] ^ quadro_codificado[i + 10]; break;
+            }
+        }
+    }
+    for(int i = 0; i < novo_tamanho; i++){
+        printf("%d", quadro_codificado[i]);
+    }
+    cout << endl;
+    this->quadro = quadro_codificado;
+    this->quadro_tamanho = novo_tamanho;
+}   
 
 void enlace::CamadaEnlaceDadosReceptoraEnquadramento()
 {
@@ -186,7 +219,7 @@ void enlace::CamadaEnlaceDadosReceptoraEnquadramento()
 
 void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
 {
-    int tipoDeControleDeErro = 0; //alterar de acordo com o teste
+    int tipoDeControleDeErro = 3; //alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
     case 0: //bit de paridade par
