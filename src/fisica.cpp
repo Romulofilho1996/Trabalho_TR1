@@ -40,7 +40,7 @@ void fisica::MeioDeComunicacao()
 void fisica::CamadaFisicaTransmissora()
 {
     cout << endl <<  "==================CAMADA FISICA TRANSMISSORA================" << endl;
-    int tipo_de_codificacao = 0; // Alterar de acordo o teste
+    int tipo_de_codificacao = 1; // Alterar de acordo o teste
     switch (tipo_de_codificacao)
     {
     case 0:
@@ -59,7 +59,7 @@ void fisica::CamadaFisicaTransmissora()
 void fisica::CamadaFisicaReceptora()
 {
     cout << endl <<  "===================CAMADA FISICA RECEPTORA==================" << endl;
-    int tipo_de_decodificacao = 0; // Alterar de acordo o teste
+    int tipo_de_decodificacao = 1; // Alterar de acordo o teste
     switch (tipo_de_decodificacao)
     {
     case 0:
