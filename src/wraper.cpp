@@ -3,7 +3,7 @@
 void wraper::AplicacaoTransmissora()
 {
     string entrada_usuario;
-    cout << "Digite uma mensagem:" << endl;
+    cout << "Digite uma mensagem: ";
     getline(cin, entrada_usuario);
     this->mensagem = entrada_usuario;
     CamadaDeAplicacaoTransmissora();
@@ -29,12 +29,24 @@ void wraper::CamadaDeAplicacaoTransmissora()
     this->quadro = binario_array;
     this->quadro_tamanho = binario.size();
     binario_array = nullptr;
-    this->camada_fisica = new fisica(this->quadro, this->quadro_tamanho);
+
+    this->camada_enlace = new enlace(this->quadro, this->quadro_tamanho);
+    this->camada_enlace->CamadaEnlaceDadosTransmissora();
+
+    //Recuperando quadro da camada de enlace dados transmissora
+    this->camada_fisica = new fisica(this->camada_enlace->quadro, this->camada_enlace->quadro_tamanho);
     this->camada_fisica->CamadaFisicaTransmissora();
+    this->camada_fisica->CamadaFisicaReceptora();
 
+    //Recuperando quadro da camada fisica para recepçãp
+    this->camada_enlace->quadro = this->camada_fisica->quadro;
+    this->camada_enlace->quadro_tamanho = this->camada_fisica->quadro_tamanho;
+    this->camada_enlace->CamadaEnlaceDadosReceptora();
 
-    //Recuperar quadro da camada fisica
-    this->quadro = this->camada_fisica->quadro;
+    //Recuperando quadro da camada de enlace de recepção para passar para aplicação
+    this->quadro = this->camada_enlace->quadro;
+    this->quadro_tamanho = this->camada_enlace->quadro_tamanho;
+
     CamadaDeAplicacaoReceptora();
 }
 

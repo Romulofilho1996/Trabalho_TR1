@@ -35,7 +35,6 @@ void fisica::MeioDeComunicacao()
     free(fluxoBrutoDeBitsPontoA);
     fluxoBrutoDeBitsPontoA = nullptr;
     this->quadro = fluxoBrutoDeBitsPontoB;
-    CamadaFisicaReceptora();
 }
 
 void fisica::CamadaFisicaTransmissora()
@@ -81,6 +80,8 @@ void fisica::CamadaFisicaTransmissoraCodificacaoBinaria()
 
     quadro_codificado = (int *)malloc(sizeof(int) * this->quadro_tamanho);
     cout << endl <<  "====================CODIFICACAO BINARIA=====================" << endl;
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < this->quadro_tamanho; i++)
     {
         quadro_codificado[i] = this->quadro[i];
@@ -98,6 +99,8 @@ void fisica::CamadaFisicaTransmissoraCodificacaoManchester()
 
     quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
     cout << endl <<  "===================CODIFICACAO MANCHESTER===================" << endl;
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0, j = 0; i < this->quadro_tamanho; i++, j += 2)
     {
         quadro_codificado[j] = this->quadro[i] ^ 0;
@@ -119,6 +122,8 @@ void fisica::CamadaFisicaTransmissoraCodificacaoManchesterDiferencial()
 
     quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
     cout << endl <<  "=============CODIFICACAO MANCHESTER DIFERENCIAL=============" << endl;
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0, j = 0; i < this->quadro_tamanho; i++, j += 2)
     {
         if (this->quadro[i] == 1)
@@ -142,13 +147,10 @@ void fisica::CamadaFisicaReceptoraDecodificacaoBinaria()
 {
     int *quadro_decodificado = (int *)malloc(sizeof(int) * this->quadro_tamanho);
     cout << endl <<  "====================DECODIFICACAO BINARIA===================" << endl;
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < this->quadro_tamanho; i++)
     {
-        if (this->quadro[i] != 0 && this->quadro[i] != 1)
-        {
-            cout << "Erro na mensagem: " << i << endl;
-            break;
-        }
         quadro_decodificado[i] = this->quadro[i];
 
         cout << quadro_decodificado[i];
@@ -164,20 +166,17 @@ void fisica::CamadaFisicaReceptoraDecodificacaoManchester()
     int *quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);
 
     cout << endl <<  "==================DECODIFICACAO MANCHESTER==================" << endl;
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0, j = 0; i < this->quadro_tamanho; i += 2, j++)
     {
         if ((this->quadro[i] == 0) && (this->quadro[i + 1] == 1))
         {
             quadro_decodificado[j] = 0;
         }
-        else if ((this->quadro[i] == 1) && (this->quadro[i + 1] == 0))
+        if ((this->quadro[i] == 1) && (this->quadro[i + 1] == 0))
         {
             quadro_decodificado[j] = 1;
-        }
-        else
-        {
-            cout << "Erro na mensagem: " << i << " " << i + 1 << endl;
-            break;
         }
         cout << quadro_decodificado[j];
     }
@@ -195,7 +194,8 @@ void fisica::CamadaFisicaReceptoraDecodificacaoManchesterDiferencial()
     int bitreferencia = 0;
 
     cout << endl <<  "============DECODIFICACAO MANCHESTER DIFERENCIAL============" << endl;
-
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0, j = 0; i < this->quadro_tamanho; i += 2, j++)
     {
 
@@ -207,11 +207,6 @@ void fisica::CamadaFisicaReceptoraDecodificacaoManchesterDiferencial()
         {
             quadro_decodificado[j] = 1;
             bitreferencia = bitreferencia ^ 1;
-        }
-        else
-        {
-            cout << "Erro na mensagem: " << i << " " << i + 1 << endl;
-            break;
         }
 
         cout << quadro_decodificado[j];

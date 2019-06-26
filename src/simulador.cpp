@@ -22,12 +22,7 @@ int main(int argc, char const *argv[])
 {
 	wraper* w = new wraper();
 	w->AplicacaoTransmissora();
-	
-	enlace* e = new enlace(w->quadro, w->quadro_tamanho);
-	e->CamadaEnlaceDadosTransmissoraControleDeErro();
-	e->CamadaEnlaceDadosReceptoraControleDeErro();
 	 
-	// delete w;
-	// delete e;
+	delete w;
 	return 0;
 }
