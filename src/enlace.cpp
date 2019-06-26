@@ -15,38 +15,32 @@ enlace::~enlace()
 void enlace::CamadaEnlaceDadosTransmissora()
 {
     cout << endl
-    << "==================CAMADA ENLACE TRANSMISSORA================" << endl;
-    CamadaEnlaceDadosTransmissoraEnquadramento();
+         << "==================CAMADA ENLACE TRANSMISSORA================" << endl;
     CamadaEnlaceDadosTransmissoraControleDeErro();
 }
 
 void enlace::CamadaEnlaceDadosReceptora()
 {
     cout << endl
-    << "====================CAMADA ENLACE RECEPTORA=================" << endl;
-    CamadaEnlaceDadosReceptoraEnquadramento();
+         << "====================CAMADA ENLACE RECEPTORA=================" << endl;
     CamadaEnlaceDadosReceptoraControleDeErro();
-}
-
-void enlace::CamadaEnlaceDadosTransmissoraEnquadramento()
-{
 }
 
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
 {
-    int tipoDeControleDeErro = 3; // Alterar de acordo com o teste
+    int tipoDeControleDeErro = 2; // Alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
-        case 0:
+    case 0:
         CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar();
         break;
-        case 1:
+    case 1:
         CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar();
         break;
-        case 2:
+    case 2:
         CamadaEnlaceDadosTransmissoraControleDeErroCRC();
         break;
-        case 3:
+    case 3:
         CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming();
         break;
     }
@@ -67,6 +61,7 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
         CamadaEnlaceDadosReceptoraControleDeErroCRC();
         break;
     case 3:
+        CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming();
         break;
     }
 }
@@ -74,7 +69,7 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar()
 {
     cout << endl
-    << "=====================CONTROLE PARIDADE PAR==================" << endl;
+         << "=====================CONTROLE PARIDADE PAR==================" << endl;
 
     int novo_tamanho = this->quadro_tamanho + 1;
     bool paridade = false;
@@ -103,11 +98,11 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar()
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar()
 {
     cout << endl
-    << "=====================CONTROLE PARIDADE IMPAR================" << endl;
+         << "=====================CONTROLE PARIDADE IMPAR================" << endl;
 
     int novo_tamanho = this->quadro_tamanho + 1;
     bool paridade = true;
-    int * quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
+    int *quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
     cout << endl
          << "QUADRO: ";
     for (int i = 0; i < this->quadro_tamanho; i++)
@@ -132,12 +127,12 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar()
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
 {
     cout << endl
-    << "========================CONTROLE CRC 32=====================" << endl;
+         << "========================CONTROLE CRC 32=====================" << endl;
     // 0x04C11DB7
     // x26 + x23 + x22 + x16 + x12 + x11 + x10 + x8 + x7 + x5 + x4 + x2 + x + 1
     // 0000 0100 1100 0001 0001 1101 1011 0111
     cout << endl
-    << "QUADRO: ";
+         << "QUADRO: ";
     for (int i = 0; i < this->quadro_tamanho; i++)
     {
         cout << this->quadro[i];
@@ -145,7 +140,7 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
     // Removi os 0's da frente pra facilitar na divisao
     int polinomio[27] = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1};
     cout << endl
-    << "POLINOMIO: ";
+         << "POLINOMIO: ";
     for (int i = 0; i < 27; i++)
     {
         cout << polinomio[i];
@@ -194,7 +189,7 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
 {
     cout << endl
-    << "========================CONTROLE HAMMING====================" << endl;
+         << "========================CONTROLE HAMMING====================" << endl;
 
     int potencias[4] = {0, 1, 3, 7};
     int j = 0;
@@ -220,19 +215,19 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
     {
         for (int i = k * 12; i < (k * 12) + 12; i++)
         {
-           switch (i % 12)
+            switch (i % 12)
             {
-                case 0:
+            case 0:
                 quadro_codificado[i] = quadro_codificado[i + 2] ^ quadro_codificado[i + 4] ^ quadro_codificado[i + 6] ^ quadro_codificado[i + 8] ^ quadro_codificado[i + 10];
                 break;
 
-                case 1:
+            case 1:
                 quadro_codificado[i] = quadro_codificado[i + 1] ^ quadro_codificado[i + 4] ^ quadro_codificado[i + 5] ^ quadro_codificado[i + 8] ^ quadro_codificado[i + 9];
                 break;
-                case 3:
+            case 3:
                 quadro_codificado[i] = quadro_codificado[i + 1] ^ quadro_codificado[i + 2] ^ quadro_codificado[i + 3] ^ quadro_codificado[i + 8];
                 break;
-                case 7:
+            case 7:
 
                 quadro_codificado[i] = quadro_codificado[i + 1] ^ quadro_codificado[i + 2] ^ quadro_codificado[i + 3] ^ quadro_codificado[i + 4];
                 break;
@@ -251,34 +246,10 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
     this->quadro_tamanho = novo_tamanho;
 }
 
-void enlace::CamadaEnlaceDadosReceptoraEnquadramento()
-{
-}
-
-void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
-{
-    int tipoDeControleDeErro = 3; // Alterar de acordo com o teste
-    switch (tipoDeControleDeErro)
-    {
-        case 0:
-        CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar();
-        break;
-        case 1:
-        CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar();
-        break;
-        case 2:
-        CamadaEnlaceDadosReceptoraControleDeErroCRC();
-        break;
-        case 3:
-        CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming();
-        break;
-    }
-}
-
 void enlace::CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar()
 {
     cout << endl
-    << "=====================RECEPCAO PARIDADE PAR==================" << endl;
+         << "=====================RECEPCAO PARIDADE PAR==================" << endl;
 
     int novo_tamanho = this->quadro_tamanho - 1;
     int *quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);
@@ -309,7 +280,7 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar()
 void enlace::CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar()
 {
     cout << endl
-    << "=====================RECEPCAO PARIDADE IMPAR================" << endl;
+         << "=====================RECEPCAO PARIDADE IMPAR================" << endl;
 
     int novo_tamanho = this->quadro_tamanho - 1;
     int *quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);
@@ -340,9 +311,9 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar()
 void enlace::CamadaEnlaceDadosReceptoraControleDeErroCRC()
 {
     cout << endl
-    << "========================RECEPCAO CRC 32=====================" << endl;
+         << "========================RECEPCAO CRC 32=====================" << endl;
     cout << endl
-    << "QUADRO: ";
+         << "QUADRO: ";
     bool quadro_valido = true;
 
     int tamanho_decodificado = this->quadro_tamanho - 31;
@@ -359,7 +330,7 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroCRC()
     int polinomio[27] = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1};
 
     cout << endl
-    << "POLINOMIO: ";
+         << "POLINOMIO: ";
     for (int i = 0; i < 27; i++)
     {
         cout << polinomio[i];
@@ -405,72 +376,77 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroCRC()
 
 void enlace::CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming()
 {
-    int c0=0,c1=0,c3=0,c7=0,c=0,k=0,j=0;
+    int c0 = 0, c1 = 0, c3 = 0, c7 = 0, c = 0, k = 0, j = 0;
     int *quadro_decodificado;
-    cout << this->
     int novo_tamanho = this->quadro_tamanho - (4 * (this->quadro_tamanho) / 12); //tamanho 8
-    quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);  //quadro pra voltar pro tamanho original
-    cout << "\n=========Recepção Codificada Hamming=========" << endl;
-    for(int k = 0; k < this->quadro_tamanho / 12; k++){  //pega a quantidade de quadros possiveis com tamanho 12
-        for(int i = k * 12; i < (k * 12) + 12; i++){     //verifica se o quadro veio com erro pegando os bits de controle do hamming
-            if(i % 12 == 0){
-              c0 = this->quadro[i+0] ^ this->quadro[i+2] ^ this->quadro[i+4] ^ this->quadro[i+6] ^ this->quadro[i+8] ^ this->quadro[i+10];
-          }
-          if(i % 12 == 1){  
-              c1 = this->quadro[i+0] ^ this->quadro[i+1] ^ this->quadro[i+4] ^ this->quadro[i+5] ^ this->quadro[i+8] ^ this->quadro[i+9]; 
-          }
-          if(i % 12 == 3){  
-              c3 = this->quadro[i+0] ^ this->quadro[i+1] ^ this->quadro[i+2] ^ this->quadro[i+3] ^ this->quadro[i+8];
-          }       
-          if(i % 12 == 7){  
-              c7 = this->quadro[i+0] ^ this->quadro[i+1] ^ this->quadro[i+2] ^ this->quadro[i+3] ^ this->quadro[i+4];   
-          }
-          if(i % 12 == 11){
-                    c = ((c7*8) + (c3*4) + (c1*2) + c0);             //calculo pra ver qual bit veio com defeito se tiver defeito
-                    if (c == 0)
+    quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);             //quadro pra voltar pro tamanho original
+    cout << endl
+         << "========================RECEPCAO HAMMING====================" << endl;
+    for (int k = 0; k < this->quadro_tamanho / 12; k++)
+    { //pega a quantidade de quadros possiveis com tamanho 12
+        for (int i = k * 12; i < (k * 12) + 12; i++)
+        { //verifica se o quadro veio com erro pegando os bits de controle do hamming
+            if (i % 12 == 0)
+            {
+                c0 = this->quadro[i + 0] ^ this->quadro[i + 2] ^ this->quadro[i + 4] ^ this->quadro[i + 6] ^ this->quadro[i + 8] ^ this->quadro[i + 10];
+            }
+            if (i % 12 == 1)
+            {
+                c1 = this->quadro[i + 0] ^ this->quadro[i + 1] ^ this->quadro[i + 4] ^ this->quadro[i + 5] ^ this->quadro[i + 8] ^ this->quadro[i + 9];
+            }
+            if (i % 12 == 3)
+            {
+                c3 = this->quadro[i + 0] ^ this->quadro[i + 1] ^ this->quadro[i + 2] ^ this->quadro[i + 3] ^ this->quadro[i + 8];
+            }
+            if (i % 12 == 7)
+            {
+                c7 = this->quadro[i + 0] ^ this->quadro[i + 1] ^ this->quadro[i + 2] ^ this->quadro[i + 3] ^ this->quadro[i + 4];
+            }
+            if (i % 12 == 11)
+            {
+                c = ((c7 * 8) + (c3 * 4) + (c1 * 2) + c0); //calculo pra ver qual bit veio com defeito se tiver defeito
+                if (c == 0)
+                {
+                    cout << "\nQUADRO: ";
+                    for (int i = k * 12; i < (k * 12) + 12; i++)
+                        cout << this->quadro[i];
+                    cout << "\nSEM ERROS NA TRANSMISSAO\n";
+                }
+                else
+                {
+                    cout << "\nERROR NA POSICAO: " << c;
+                    cout << "\nQUADRO: ";
+                    for (int i = k * 12; i < (k * 12) + 12; i++)
+                        cout << this->quadro[i];
+
+                    cout << "\nQUADRO CORRETO: \n";
+
+                    if (quadro[12 - c] == 0)
+                        quadro[12 - c] = 1;
+                    else
+                        quadro[12 - c] = 0;
+                    for (int i = k * 12; i < (k * 12) + 12; i++)
                     {
-                      cout<<"\nDado recebido: ";
-                      for(int i = k * 12; i < (k * 12) + 12; i++)
-                          cout<<this->quadro[i];
-                      cout<<"\nSem erro durante a transimissao\n";
-                  }   
-                  else {
-                    cout<<"\nError na posicao "<< c;
-                    cout<<"\nDado recebido: ";
-                    for(int i = k * 12; i < (k * 12) + 12; i++)
-                      cout<<this->quadro[i];
-
-                  cout<<"\nDado correto é: \n";
-
-                  if(quadro[12-c]==0)
-                      quadro[12-c]=1;
-                  else
-                      quadro[12-c]=0;
-                  for(int i = k * 12; i < (k * 12) + 12; i++) {
-                      cout<<this->quadro[i];
-                  } 
-              }
-
-          }
-      }
-
-
-
-
-  }
-    while(k <= (this->quadro_tamanho / 12) * 8)  //quantos quadros eu tenho. aqui coloca os bits nas posicoes certas
-    {       
-        quadro_decodificado[k] = this->quadro[j+2];
-        quadro_decodificado[k+1] = this->quadro[j+4];
-        quadro_decodificado[k+2] = this->quadro[j+5];
-        quadro_decodificado[k+3] = this->quadro[j+6];
-        quadro_decodificado[k+4] = this->quadro[j+8];
-        quadro_decodificado[k+5] = this->quadro[j+9];
-        quadro_decodificado[k+6] = this->quadro[j+10];
-        quadro_decodificado[k+7] = this->quadro[j+11];
-        k+=8;
-        j+=12;
-    }   
+                        cout << this->quadro[i];
+                    }
+                    exit(EXIT_FAILURE);
+                }
+            }
+        }
+    }
+    while (k <= (this->quadro_tamanho / 12) * 8) //quantos quadros eu tenho. aqui coloca os bits nas posicoes certas
+    {
+        quadro_decodificado[k] = this->quadro[j + 2];
+        quadro_decodificado[k + 1] = this->quadro[j + 4];
+        quadro_decodificado[k + 2] = this->quadro[j + 5];
+        quadro_decodificado[k + 3] = this->quadro[j + 6];
+        quadro_decodificado[k + 4] = this->quadro[j + 8];
+        quadro_decodificado[k + 5] = this->quadro[j + 9];
+        quadro_decodificado[k + 6] = this->quadro[j + 10];
+        quadro_decodificado[k + 7] = this->quadro[j + 11];
+        k += 8;
+        j += 12;
+    }
     this->quadro = quadro_decodificado;
     this->quadro_tamanho = novo_tamanho;
 }

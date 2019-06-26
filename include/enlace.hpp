@@ -15,7 +15,6 @@ public:
     int quadro_tamanho;
     //TRANSMISSÃO
     void CamadaEnlaceDadosTransmissora();
-    void CamadaEnlaceDadosTransmissoraEnquadramento();
     void CamadaEnlaceDadosTransmissoraControleDeErro();
 
     /**
@@ -50,7 +49,6 @@ public:
 
     //RECEPÇÃO
     void CamadaEnlaceDadosReceptora();
-    void CamadaEnlaceDadosReceptoraEnquadramento();
     void CamadaEnlaceDadosReceptoraControleDeErro();
 
     /**
