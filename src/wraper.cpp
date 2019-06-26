@@ -11,8 +11,8 @@ void wraper::AplicacaoTransmissora()
 
 void wraper::CamadaDeAplicacaoTransmissora()
 {
-    cout << "\n=========ENTRANDO CAMADA APLICACAO TRANSMISSORA=========" << endl;
-    cout << "\n=========REALIZANDO CONVERSAO PARA BINARIO=========" << endl;
+    cout << endl <<  "================CAMADA APLICACAO TRANSMISSORA===============" << endl;
+    cout << endl <<  "=============REALIZANDO CONVERSAO PARA BINARIO==============" << endl;
     string binario;
     for (size_t i = 0; i < this->mensagem.size(); i++)
     {
@@ -40,12 +40,12 @@ void wraper::CamadaDeAplicacaoTransmissora()
 
 void wraper::AplicacaoReceptora()
 {
-    cout << "A mensagem recebida foi: " << this->mensagem << endl;
+    cout << endl <<  "A mensagem recebida foi: " << this->mensagem << endl;
 }
 
 void wraper::CamadaDeAplicacaoReceptora()
 {
-    cout << "\n=========ENTRANDO CAMADA APLICACAO RECEPTORA=========" << endl;
+    cout << endl <<  "=================CAMADA APLICACAO RECEPTORA=================" << endl;
     string bit_string = "";
     string mensagem_final = "";
     for (int i = 0; i < this->quadro_tamanho; i++)

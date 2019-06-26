@@ -11,8 +11,6 @@ class enlace
 {
 private:
     
-    void setQuadro(int*);
-
 public:
     int* quadro;
     int quadro_tamanho;
@@ -20,7 +18,6 @@ public:
     void CamadaEnlaceDadosTransmissora();
     void CamadaEnlaceDadosTransmissoraEnquadramento();
     void CamadaEnlaceDadosTransmissoraControleDeErro();
-    void CamadaEnlaceDadosTransmissoraControleDeFluxo();
 
     /**
      * @brief Realiza o controle de erro de paridade par.
@@ -42,7 +39,6 @@ public:
     void CamadaEnlaceDadosReceptora();
     void CamadaEnlaceDadosReceptoraEnquadramento();
     void CamadaEnlaceDadosReceptoraControleDeErro();
-    void CamadaEnlaceDadosReceptoraControleDeFluxo();
 
     /**
      * @brief Realiza o controle de erro de paridade par.
@@ -63,8 +59,6 @@ public:
     void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar();
     void CamadaEnlaceDadosReceptoraControleDeErroCRC();
     void CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming();
-
-    int* getQuadro();
 
     enlace(int* quadro, int quadro_tamanho);
     ~enlace();
