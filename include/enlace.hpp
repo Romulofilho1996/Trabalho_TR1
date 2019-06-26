@@ -21,7 +21,19 @@ public:
     void CamadaEnlaceDadosTransmissoraEnquadramento();
     void CamadaEnlaceDadosTransmissoraControleDeErro();
     void CamadaEnlaceDadosTransmissoraControleDeFluxo();
+
+    /**
+     * @brief Realiza o controle de erro de paridade par.
+     * Encontra a paridade realizando operações NOT numa variável booleana
+     * a cada '1' encontrado, para então adicionar a variável ao quadro.
+     */
     void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar();
+
+    /**
+     * @brief Realiza o controle de erro de paridade par.
+     * Encontra a paridade realizando operações NOT numa variável booleana
+     * a cada '1' encontrado, para então adicionar a variável ao quadro.
+     */
     void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar();
     void CamadaEnlaceDadosTransmissoraControleDeErroCRC();
     void CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming();
@@ -31,7 +43,23 @@ public:
     void CamadaEnlaceDadosReceptoraEnquadramento();
     void CamadaEnlaceDadosReceptoraControleDeErro();
     void CamadaEnlaceDadosReceptoraControleDeFluxo();
+
+    /**
+     * @brief Realiza o controle de erro de paridade par.
+     * Encontra a paridade realizando operações NOT numa variável booleana
+     * a cada '1' encontrado no quadro recebido, então compara
+     * a variável encontrada com o último elemento do quadro recebido.
+     * Caso sejam diferentes, houve erro na transmissão.
+     */
     void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar();
+
+    /**
+     * @brief Realiza o controle de erro de paridade par.
+     * Encontra a paridade realizando operações NOT numa variável booleana
+     * a cada '1' encontrado no quadro recebido, então compara
+     * a variável encontrada com o último elemento do quadro recebido.
+     * Caso sejam diferentes, houve erro na transmissão.
+     */
     void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar();
     void CamadaEnlaceDadosReceptoraControleDeErroCRC();
     void CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming();
