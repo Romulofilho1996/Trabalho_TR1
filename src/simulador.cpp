@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
 	enlace* e = new enlace(w->quadro, w->quadro_tamanho);
 	e->CamadaEnlaceDadosTransmissoraControleDeErro();
 	e->CamadaEnlaceDadosReceptoraControleDeErro();
-	
+	 
 	// delete w;
 	// delete e;
 	return 0;
