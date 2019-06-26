@@ -220,19 +220,19 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
     {
         for (int i = k * 12; i < (k * 12) + 12; i++)
         {
-            switch (i % 12)
+           switch (i % 12)
             {
             case 0:
-                quadro_codificado[i] = quadro_codificado[k + 2] ^ quadro_codificado[k + 4] ^ quadro_codificado[k + 6] ^ quadro_codificado[k + 8] ^ quadro_codificado[k + 10];
+                quadro_codificado[i] = quadro_codificado[i + 2] ^ quadro_codificado[i + 4] ^ quadro_codificado[i + 6] ^ quadro_codificado[i + 8] ^ quadro_codificado[i + 10];
                 break;
             case 1:
-                quadro_codificado[i] = quadro_codificado[k + 2] ^ quadro_codificado[k + 5] ^ quadro_codificado[k + 6] ^ quadro_codificado[k + 9] ^ quadro_codificado[k + 10];
+                quadro_codificado[i] = quadro_codificado[i + 1] ^ quadro_codificado[i + 4] ^ quadro_codificado[i + 5] ^ quadro_codificado[i + 8] ^ quadro_codificado[i + 9];
                 break;
             case 3:
-                quadro_codificado[i] = quadro_codificado[k + 4] ^ quadro_codificado[k + 5] ^ quadro_codificado[k + 6] ^ quadro_codificado[k + 11];
+                quadro_codificado[i] = quadro_codificado[i + 1] ^ quadro_codificado[i + 2] ^ quadro_codificado[i + 3] ^ quadro_codificado[i + 8];
                 break;
             case 7:
-                quadro_codificado[i] = quadro_codificado[k + 8] ^ quadro_codificado[k + 9] ^ quadro_codificado[k + 10] ^ quadro_codificado[k + 11];
+                quadro_codificado[i] = quadro_codificado[i + 1] ^ quadro_codificado[i + 2] ^ quadro_codificado[i + 3] ^ quadro_codificado[i + 4];
                 break;
             }
         }
