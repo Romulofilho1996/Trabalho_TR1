@@ -12,7 +12,7 @@ _OBJ = simulador.o fisica.o enlace.o wraper.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cpp $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -std=c++11 -c -o $@ $< $(CFLAGS)
 
 simulador: $(OBJ)
 	$(CC) -std=c++11 -o $@ $^ $(CFLAGS) $(LIBS)
