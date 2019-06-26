@@ -52,16 +52,35 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
     }
 }
 
+void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
+{
+    int tipoDeControleDeErro = 2; // Alterar de acordo com o teste
+    switch (tipoDeControleDeErro)
+    {
+    case 0:
+        CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar();
+        break;
+    case 1:
+        CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar();
+        break;
+    case 2:
+        CamadaEnlaceDadosReceptoraControleDeErroCRC();
+        break;
+    case 3:
+        break;
+    }
+}
+
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar()
 {
     cout << endl
          << "=====================CONTROLE PARIDADE PAR==================" << endl;
 
-    int *quadro_codificado;
     int novo_tamanho = this->quadro_tamanho + 1;
     bool paridade = false;
-    quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
-
+    int *quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < this->quadro_tamanho; i++)
     {
         if (this->quadro[i] == 1)
@@ -76,7 +95,7 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar()
         cout << quadro_codificado[i];
     }
     cout << endl;
-    // free(this->quadro);
+    free(this->quadro);
     this->quadro = quadro_codificado;
     this->quadro_tamanho = novo_tamanho;
 }
@@ -86,11 +105,11 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar()
     cout << endl
          << "=====================CONTROLE PARIDADE IMPAR================" << endl;
 
-    int *quadro_codificado;
     int novo_tamanho = this->quadro_tamanho + 1;
     bool paridade = true;
-    quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
-
+    int * quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < this->quadro_tamanho; i++)
     {
         if (this->quadro[i] == 1)
@@ -105,7 +124,7 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar()
         cout << quadro_codificado[i];
     }
     cout << endl;
-    // free(this->quadro);
+    free(this->quadro);
     this->quadro = quadro_codificado;
     this->quadro_tamanho = novo_tamanho;
 }
@@ -167,6 +186,7 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCRC()
     }
     cout << endl;
 
+    free(this->quadro);
     this->quadro_tamanho = novo_tamanho;
     this->quadro = quadro_crc;
 }
@@ -217,11 +237,14 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
             }
         }
     }
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < novo_tamanho; i++)
     {
         cout << quadro_codificado[i];
     }
     cout << endl;
+    free(this->quadro);
     this->quadro = quadro_codificado;
     this->quadro_tamanho = novo_tamanho;
 }
@@ -230,51 +253,34 @@ void enlace::CamadaEnlaceDadosReceptoraEnquadramento()
 {
 }
 
-void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
-{
-    int tipoDeControleDeErro = 2; // Alterar de acordo com o teste
-    switch (tipoDeControleDeErro)
-    {
-    case 0:
-        CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar();
-        break;
-    case 1:
-        CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar();
-        break;
-    case 2:
-        CamadaEnlaceDadosReceptoraControleDeErroCRC();
-        break;
-    case 3:
-        break;
-    }
-}
-
 void enlace::CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar()
 {
     cout << endl
          << "=====================RECEPCAO PARIDADE PAR==================" << endl;
 
-    int *quadro_codificado = (int *)malloc(sizeof(int) * this->quadro_tamanho);
     int novo_tamanho = this->quadro_tamanho - 1;
+    int *quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);
     bool paridade = false;
+
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < novo_tamanho; i++)
     {
         if (this->quadro[i] == 1)
         {
             paridade = !paridade;
         }
-        quadro_codificado[i] = this->quadro[i];
-        cout << quadro_codificado[i];
+        quadro_decodificado[i] = this->quadro[i];
+        cout << quadro_decodificado[i];
     }
-    cout << this->quadro[novo_tamanho];
     if (this->quadro[novo_tamanho] != int(paridade))
     {
-        cout << endl << "ERRO NA MENSAGEM" << endl;
+        cout << endl
+             << "ERRO NA MENSAGEM" << endl;
         exit(EXIT_FAILURE);
     }
     cout << endl;
-    free(this->quadro);
-    this->quadro = quadro_codificado;
+    this->quadro = quadro_decodificado;
     this->quadro_tamanho = novo_tamanho;
 }
 
@@ -283,27 +289,29 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar()
     cout << endl
          << "=====================RECEPCAO PARIDADE IMPAR================" << endl;
 
-    int *quadro_codificado = (int *)malloc(sizeof(int) * this->quadro_tamanho);
     int novo_tamanho = this->quadro_tamanho - 1;
+    int *quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);
     bool paridade = true;
+
+    cout << endl
+         << "QUADRO: ";
     for (int i = 0; i < novo_tamanho; i++)
     {
         if (this->quadro[i] == 1)
         {
             paridade = !paridade;
         }
-        quadro_codificado[i] = this->quadro[i];
-        cout << quadro_codificado[i];
+        quadro_decodificado[i] = this->quadro[i];
+        cout << quadro_decodificado[i];
     }
-    cout << this->quadro[novo_tamanho];
     if (this->quadro[novo_tamanho] != int(paridade))
     {
-        cout << endl << "ERRO NA MENSAGEM" << endl;
+        cout << endl
+             << "ERRO NA MENSAGEM" << endl;
         exit(EXIT_FAILURE);
     }
     cout << endl;
-    free(this->quadro);
-    this->quadro = quadro_codificado;
+    this->quadro = quadro_decodificado;
     this->quadro_tamanho = novo_tamanho;
 }
 
@@ -367,7 +375,8 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroCRC()
     }
     else
     {
-        cout << endl << "ERRO NA MENSAGEM" << endl;
+        cout << endl
+             << "ERRO NA MENSAGEM" << endl;
         exit(EXIT_FAILURE);
     }
 }
