@@ -34,7 +34,7 @@ void enlace::CamadaEnlaceDadosTransmissoraEnquadramento()
 
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
 {
-    int tipoDeControleDeErro = 2; // Alterar de acordo com o teste
+    int tipoDeControleDeErro = 3; // Alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
     case 0:
@@ -203,16 +203,16 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming()
             switch (i % 12)
             {
             case 0:
-                quadro_codificado[i] = quadro_codificado[i + 2] ^ quadro_codificado[i + 4] ^ quadro_codificado[i + 6] ^ quadro_codificado[i + 8] ^ quadro_codificado[i + 10];
+                quadro_codificado[i] = quadro_codificado[k + 2] ^ quadro_codificado[k + 4] ^ quadro_codificado[k + 6] ^ quadro_codificado[k + 8] ^ quadro_codificado[k + 10];
                 break;
             case 1:
-                quadro_codificado[i] = quadro_codificado[i + 2] ^ quadro_codificado[i + 5] ^ quadro_codificado[i + 6] ^ quadro_codificado[i + 9] ^ quadro_codificado[i + 10];
+                quadro_codificado[i] = quadro_codificado[k + 2] ^ quadro_codificado[k + 5] ^ quadro_codificado[k + 6] ^ quadro_codificado[k + 9] ^ quadro_codificado[k + 10];
                 break;
             case 3:
-                quadro_codificado[i] = quadro_codificado[i + 4] ^ quadro_codificado[i + 5] ^ quadro_codificado[i + 6];
+                quadro_codificado[i] = quadro_codificado[k + 4] ^ quadro_codificado[k + 5] ^ quadro_codificado[k + 6] ^ quadro_codificado[k + 11];
                 break;
             case 7:
-                quadro_codificado[i] = quadro_codificado[i + 8] ^ quadro_codificado[i + 9] ^ quadro_codificado[i + 10];
+                quadro_codificado[i] = quadro_codificado[k + 8] ^ quadro_codificado[k + 9] ^ quadro_codificado[k + 10] ^ quadro_codificado[k + 11];
                 break;
             }
         }
@@ -232,7 +232,7 @@ void enlace::CamadaEnlaceDadosReceptoraEnquadramento()
 
 void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
 {
-    int tipoDeControleDeErro = 2; // Alterar de acordo com o teste
+    int tipoDeControleDeErro = 3; // Alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
     case 0:
@@ -245,6 +245,7 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
         CamadaEnlaceDadosReceptoraControleDeErroCRC();
         break;
     case 3:
+        CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming();
         break;
     }
 }
@@ -374,4 +375,72 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroCRC()
 
 void enlace::CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming()
 {
+    int c0=0,c1=0,c3=0,c7=0,c=0;
+    int *quadro_codificado;
+    int novo_tamanho = this->quadro_tamanho - ((4 * this->quadro_tamanho / 8) -2); //tamanho 8
+    quadro_codificado = (int *)malloc(sizeof(int) * novo_tamanho);  //quadro pra voltar pro tamanho original
+    cout << "\n=========Recepção Codificada Hamming=========" << endl;
+    for(int k = 0; k < this->quadro_tamanho / 12; k++){  //pega a quantidade de quadros possiveis com tamanho 12
+        for(int i = k * 12; i < (k * 12) + 12; i++){     //verifica se o quadro veio com erro pegando os bits de controle do hamming
+            if(i % 12 == 0){
+              c0 = this->quadro[k+0] ^ this->quadro[k+2] ^ this->quadro[k+4] ^ this->quadro[k+6] ^ this->quadro[k+8] ^ this->quadro[k+10];
+            }
+            if(i % 12 == 1){  
+              c1 = this->quadro[k+1] ^ this->quadro[k+2] ^ this->quadro[k+5] ^ this->quadro[k+6] ^ this->quadro[k+9] ^ this->quadro[k+10]; 
+            }
+            if(i % 12 == 3){  
+              c3 = this->quadro[k+3] ^ this->quadro[k+4] ^ this->quadro[k+5] ^ this->quadro[k+6] ^ this->quadro[k+11];
+              }       
+            if(i % 12 == 7){  
+              c7 = this->quadro[k+7] ^ this->quadro[k+8] ^ this->quadro[k+9] ^ this->quadro[k+10] ^ this->quadro[k+11];   
+              }
+            if(i % 12 == 11){
+                    c = ((c7*8) + (c3*4) + (c1*2) + c0);             //calculo pra ver qual bit veio com defeito se tiver defeito
+                    if (c == 0)
+                    {
+                      cout<<"\nDado recebido: ";
+                        for(i=0;i<12;i++)
+                          cout<<this->quadro[i];
+                      cout<<"\nSem erro durante a transimissao\n";
+                    }
+                    else {
+                    cout<<"\nError na posicao "<<c;
+                    cout<<"\nDado recebido: ";
+                        for(i=0;i<12;i++)
+                          cout<<this->quadro[i];
+
+                    cout<<"\nDado correto é: \n";
+
+                    if(quadro[12-c]==0)
+                      quadro[12-c]=1;
+                        else
+                      quadro[12-c]=0;
+                    for (i=0;i<12;i++) {
+                      cout<<this->quadro[i];
+                    } 
+                 }
+
+            }
+          }
+
+
+
+for (int k = 0; k < this->quadro_tamanho / 12; k++)  //quantos quadros eu tenho. aqui coloca os bits nas posicoes certas
+    {
+        for (int i = k * 12; i < (k * 12) + 12; i+=8)  
+        {   
+            quadro_codificado[i+0] = this->quadro[k+2];
+            quadro_codificado[i+1] = this->quadro[k+4];
+            quadro_codificado[i+2] = this->quadro[k+5];
+            quadro_codificado[i+3] = this->quadro[k+6];
+            quadro_codificado[i+4] = this->quadro[k+8];
+            quadro_codificado[i+5] = this->quadro[k+9];
+            quadro_codificado[i+6] = this->quadro[k+10];
+            quadro_codificado[i+7] = this->quadro[k+11];
+        }
+    }   
+
+        }
+    this->quadro = quadro_codificado;
+    this->quadro_tamanho = novo_tamanho;
 }
