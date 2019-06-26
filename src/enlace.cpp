@@ -43,7 +43,7 @@ void enlace::CamadaEnlaceDadosTransmissoraEnquadramento()
 
 void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
 {
-    int tipoDeControleDeErro = 3; //alterar de acordo com o teste
+    int tipoDeControleDeErro = 2; //alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
     case 0: //bit de paridade par
@@ -53,6 +53,8 @@ void enlace::CamadaEnlaceDadosTransmissoraControleDeErro()
         CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar();
         break;
     case 2: //CRC
+        CamadaEnlaceDadosTransmissoraControleDeErroCRC();
+        break;
     //codigo
     case 3: //codigo de Hamming
         CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming();
@@ -219,7 +221,7 @@ void enlace::CamadaEnlaceDadosReceptoraEnquadramento()
 
 void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
 {
-    int tipoDeControleDeErro = 3; //alterar de acordo com o teste
+    int tipoDeControleDeErro = 2; //alterar de acordo com o teste
     switch (tipoDeControleDeErro)
     {
     case 0: //bit de paridade par
@@ -229,6 +231,8 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErro()
         CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar();
         break;
     case 2: //CRC
+        CamadaEnlaceDadosReceptoraControleDeErroCRC();
+        break;
     //codigo
     case 3: //codigo de hamming
         //codigo
