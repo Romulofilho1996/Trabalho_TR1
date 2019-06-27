@@ -13,6 +13,8 @@ void wraper::CamadaDeAplicacaoTransmissora()
 {
     cout << endl <<  "================CAMADA APLICACAO TRANSMISSORA===============" << endl;
     cout << endl <<  "=============REALIZANDO CONVERSAO PARA BINARIO==============" << endl;
+    cout << endl
+         << "BINARIO: ";
     string binario;
     for (size_t i = 0; i < this->mensagem.size(); i++)
     {
@@ -82,4 +84,5 @@ wraper::wraper()
 wraper::~wraper()
 {
     delete this->camada_fisica;
+    delete this->camada_enlace;
 }
