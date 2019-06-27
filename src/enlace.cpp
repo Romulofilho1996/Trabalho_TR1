@@ -377,8 +377,8 @@ void enlace::CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming()
 {
     int c0=0,c1=0,c3=0,c7=0,c=0,k=0,j=0;
     int *quadro_decodificado;
-    cout << this->
     int novo_tamanho = this->quadro_tamanho - (4 * (this->quadro_tamanho) / 12); //tamanho 8
+    cout <<"teste " << novo_tamanho << endl;
     quadro_decodificado = (int *)malloc(sizeof(int) * novo_tamanho);  //quadro pra voltar pro tamanho original
     cout << "\n=========Recepção Codificada Hamming=========" << endl;
     for(int k = 0; k < this->quadro_tamanho / 12; k++){  //pega a quantidade de quadros possiveis com tamanho 12
